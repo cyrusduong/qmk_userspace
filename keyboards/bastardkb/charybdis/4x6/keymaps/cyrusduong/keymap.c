@@ -59,8 +59,10 @@ static uint16_t auto_pointer_layer_timer = 0;
 #    define SNIPING KC_NO
 #endif // !POINTING_DEVICE_ENABLE
 
-#define CHARYBDIS_DRAGSCROLL_REVERSE_X // inverts horizontal scrolling
-// #define CHARYBDIS_DRAGSCROLL_REVERSE_Y // inverts vertical scrolling
+const uint16_t PROGMEM escape_combo[] = {KC_N, KC_E, COMBO_END};
+combo_t key_combos[] = {
+    COMBO(escape_combo, KC_ESC),
+};
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -74,8 +76,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
        KC_LALT,    PT_Z,    KC_X,    KC_C,    KC_D,    KC_V,       KC_K,    KC_H, KC_COMM,  KC_DOT, PT_SLSH, KC_MINS,
   // ╰──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────╯
-                                 KC_LGUI,  KC_SPC, NUMBERS,     NUMBERS,  QK_REP,
-                                          KC_LSFT, SYMBOLS,     SYMBOLS
+                                 KC_LGUI,   KC_SPC, NUMBERS,     NUMBERS,  QK_REP,
+                                           KC_LSFT, SYMBOLS,     SYMBOLS
   //                            ╰───────────────────────────╯ ╰──────────────────╯
   ),
   [LAYER_NUMBERS] = LAYOUT(
@@ -138,6 +140,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 #ifdef POINTING_DEVICE_ENABLE
+// #define PMW33XX_LIFTOFF_DISTANCE 0x0F
 #    ifdef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
     if (abs(mouse_report.x) > CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD || abs(mouse_report.y) > CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD) {
